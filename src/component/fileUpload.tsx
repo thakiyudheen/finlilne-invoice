@@ -7,9 +7,10 @@ import { toast } from 'sonner';
 interface ImageUploaderProps {
   setFieldValue: (field: string, value: any) => void;
   imageFieldName: string;
+  url:string ;
 }
 
-const ImageUploader: React.FC<ImageUploaderProps> = ({ setFieldValue, imageFieldName }) => {
+const ImageUploader: React.FC<ImageUploaderProps> = ({ setFieldValue, imageFieldName ,url }) => {
   const [uploadResult, setUploadResult] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false); 
@@ -62,6 +63,8 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ setFieldValue, imageField
             <img src={uploadResult} alt="Uploaded logo" className="h-full object-contain" />
           ) : selectedImage ? (
             <img src={selectedImage} alt="Selected preview" className="h-full object-contain" />
+          ) :url ? (
+            <img src={url} alt="Selected preview" className="h-full object-contain" />
           ) : (
             <div className='flex flex-col justify-center items-center'>
             <span className="text-center font-bold text-1xl">Company</span>

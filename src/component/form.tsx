@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Formik, Field, Form, FieldArray } from "formik";
+import { Formik, Field, Form, FieldArray, ErrorMessage } from "formik";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { MdOutlineAddBox } from "react-icons/md";
 import { generateInvoicePDF } from "../_lib/jsPdf/generateInvoice";
@@ -7,12 +7,13 @@ import ImageUploader from "./fileUpload";
 import Container from "./container";
 import { useDispatch, useSelector } from "react-redux";
 import { setTotal } from "../redux/slices/totalSlice";
+import { validationSchema } from "../schema/formValidation";
 
 
 function Invoice() {
     const [showDiscount, setShowDiscount] = useState(false);
     const [showShipping, setShowShipping] = useState(false);
-    const {total} = useSelector((state:any)=>state.total)
+    const { total } = useSelector((state: any) => state.total)
     const dispatch = useDispatch()
 
 
@@ -86,6 +87,7 @@ function Invoice() {
                         discount: 0,
                         imageUrl: '',
                     }}
+                    validationSchema={validationSchema}
                     onSubmit={async (values) => {
 
                         try {
@@ -124,6 +126,7 @@ function Invoice() {
                                     <ImageUploader
                                         setFieldValue={setFieldValue}
                                         imageFieldName="imageUrl"
+                                        url={values.imageUrl}
                                     />
 
                                     {/* Invoice Details */}
@@ -264,6 +267,7 @@ function Invoice() {
                                                                         className="border border-orange-200 px-2 rounded w-full focus:outline-none text-md"
                                                                         placeholder="Quantity"
                                                                     />
+                                                                    <ErrorMessage name={`items.${index}.quantity`} component="small" className="text-red-500" />
                                                                 </td>
                                                                 <td className="">
                                                                     <Field
@@ -273,6 +277,7 @@ function Invoice() {
                                                                         className="border border-orange-200 px-2 rounded w-full focus:outline-none text-md"
                                                                         placeholder="Rate"
                                                                     />
+                                                                    <ErrorMessage name={`items.${index}.rate`} component="small" className="text-red-500" />
                                                                 </td>
                                                                 <td className="px-4 text-right md:mr-0">
                                                                     ${(item.quantity * item.rate)}
@@ -366,49 +371,56 @@ function Invoice() {
 
                                             {/* Conditional Discount Field */}
                                             {showDiscount && (
+                                                <>
 
-                                                <div className="flex items-center border border-orange-300 bg-orange-50 rounded-full overflow-hidden">
-                                                    <label
-                                                        htmlFor="discount"
-                                                        className="w-3/4 px-4 text-left text-sm"
-                                                    >
-                                                        discount
-                                                    </label>
-                                                    <Field
-                                                        type="number"
-                                                        name="discount"
-                                                        className="w-full p-2 focus:outline-none border-l border-orange-200 text-md text-right"
-                                                    />
-                                                    <div className="px-4 py-2 border-l border-orange-300" onClick={() => setShowDiscount(false)}>
-                                                        -
+                                                    <ErrorMessage name="discount" component="small" className="text-red-500" />
+                                                    <div className="flex items-center border border-orange-300 bg-orange-50 rounded-full overflow-hidden">
+                                                        <label
+                                                            htmlFor="discount"
+                                                            className="w-3/4 px-4 text-left text-sm"
+                                                        >
+                                                            discount
+                                                        </label>
+                                                        <Field
+                                                            type="number"
+                                                            name="discount"
+                                                            className="w-full p-2 focus:outline-none border-l border-orange-200 text-md text-right"
+                                                        />
+                                                        <div className="px-4 py-2 border-l border-orange-300" onClick={() => setShowDiscount(false)}>
+                                                            -
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </>
 
                                             )}
 
                                             {/* Conditional Shipping Field */}
                                             {showShipping && (
+                                                <>
 
-                                                <div className="flex items-center border border-orange-300 bg-orange-50 rounded-full overflow-hidden">
-                                                    <label
-                                                        htmlFor="discount"
-                                                        className="w-3/4 px-4 text-left text-sm"
-                                                    >
-                                                        shipping
-                                                    </label>
-                                                    <Field
-                                                        type="number"
-                                                        name="shipping"
-                                                        className="w-full p-2 focus:outline-none border-l border-orange-200 text-md text-right"
-                                                    />
-                                                    <div className="px-4 py-2 border-l border-orange-300" onClick={() => setShowShipping(false)}>
-                                                        -
+                                                    <ErrorMessage name="shipping" component="small" className="text-red-500" />
+                                                    <div className="flex items-center border border-orange-300 bg-orange-50 rounded-full overflow-hidden">
+                                                        <label
+                                                            htmlFor="discount"
+                                                            className="w-3/4 px-4 text-left text-sm"
+                                                        >
+                                                            shipping
+                                                        </label>
+                                                        <Field
+                                                            type="number"
+                                                            name="shipping"
+                                                            className="w-full p-2 focus:outline-none border-l border-orange-200 text-md text-right"
+                                                        />
+                                                        <div className="px-4 py-2 border-l border-orange-300" onClick={() => setShowShipping(false)}>
+                                                            -
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </>
                                             )}
 
                                             {/* Taxable Value */}
 
+                                            <ErrorMessage name="tax" component="small" className="text-red-500" />
                                             <div className="flex items-center border border-orange-300 bg-orange-50 rounded-full overflow-hidden">
                                                 <label
                                                     htmlFor="tax"
@@ -420,7 +432,7 @@ function Invoice() {
                                                     type="number"
                                                     name="tax"
                                                     className="w-full p-2 focus:outline-none border-l border-orange-200 text-md text-right "
-                                                // onChange={calculateTax}
+
                                                 />
                                                 <div className="px-3 py-2 border-l border-orange-300">
                                                     %
