@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { Formik, Field, Form, FieldArray, ErrorMessage } from "formik";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { MdOutlineAddBox } from "react-icons/md";
 import { generateInvoicePDF } from "../_lib/jsPdf/generateInvoice";
-import ImageUploader from "./fileUpload";
+// import ImageUploader from "./fileUpload";
+const ImageUploader = lazy(() => import('./fileUpload'))
 import Container from "./container";
 import { useDispatch, useSelector } from "react-redux";
 import { setTotal } from "../redux/slices/totalSlice";
@@ -122,14 +123,15 @@ function Invoice() {
                         return (
                             <Form className="container mx-auto md:p-8 p-4 bg-white max-w-5xl rounded-lg md:shadow-lg md:border border-gray-300">
                                 <div className="flex justify-between md:flex-row flex-col items-start mb-8">
-                                    {/* Logo Section */}
-                                    <ImageUploader
-                                        setFieldValue={setFieldValue}
-                                        imageFieldName="imageUrl"
-                                        url={values.imageUrl}
-                                    />
+                                    <Suspense fallback={<small>Loading...</small>}>
+                                        <ImageUploader
+                                            setFieldValue={setFieldValue}
+                                            imageFieldName="imageUrl"
+                                            url={values.imageUrl}
+                                        />
+                                    </Suspense>
 
-                                    {/* Invoice Details */}
+
                                     <div className="flex flex-col md:w-1/2 w-full space-y-4">
                                         {/* Invoice Number */}
                                         <div className="flex items-center border border-orange-300 rounded-full overflow-hidden relative">

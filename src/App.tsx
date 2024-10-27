@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { lazy, useState } from 'react'
 import './App.css'
 import Invoice from './component/form'
 import Navbar from './component/navbar'
