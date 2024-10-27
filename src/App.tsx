@@ -1,20 +1,12 @@
-import { lazy, useState } from 'react'
+import React from 'react'
 import './App.css'
-import Invoice from './component/form'
-import Navbar from './component/navbar'
-import Footer from './component/footer'
-import ContactForm from './component/contactForm'
-import SocialContact from './component/socialConnect'
+import Home from './page/Home'
 
 function App() {
 
   return (
     <>
-      <Navbar />
-      <Invoice />
-      <SocialContact />
-      <ContactForm />
-      <Footer />
+      <Home/>
     </>
   )
 }
