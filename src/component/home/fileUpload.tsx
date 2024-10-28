@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { PiFolderOpenFill } from 'react-icons/pi';
-import { FileUpload } from '../_lib/cloudinary/imageUpload';
+import { FileUpload } from '../../_lib/cloudinary/imageUpload';
 import { Circles } from 'react-loader-spinner'; 
 import { toast } from 'sonner';
 

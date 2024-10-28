@@ -2,13 +2,12 @@ import React, { lazy, Suspense, useEffect, useState } from "react";
 import { Formik, Field, Form, FieldArray, ErrorMessage } from "formik";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { MdOutlineAddBox } from "react-icons/md";
-import { generateInvoicePDF } from "../_lib/jsPdf/generateInvoice";
-// import ImageUploader from "./fileUpload";
+import { generateInvoicePDF } from "../../_lib/jsPdf/generateInvoice";
 const ImageUploader = lazy(() => import('./fileUpload'))
-import Container from "./container";
+import Container from "../common/container";
 import { useDispatch, useSelector } from "react-redux";
-import { setTotal } from "../redux/slices/totalSlice";
-import { validationSchema } from "../schema/formValidation";
+import { setTotal } from "../../redux/slices/totalSlice";
+import { validationSchema } from "../../schema/formValidation";
 
 
 function Invoice() {
@@ -481,7 +480,7 @@ function Invoice() {
                                     </div>
                                 </div>
 
-                                {/* Centered Download and Clear Buttons */}
+                                {/*  Download button and clear button */}
                                 <div className="flex justify-center mt-8 space-x-4">
                                     <button
                                         type="submit"

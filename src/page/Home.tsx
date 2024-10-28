@@ -1,9 +1,9 @@
 import React from 'react'
-import Navbar from '../component/navbar'
-import Invoice from '../component/form'
-import SocialContact from '../component/socialConnect'
-import ContactForm from '../component/contactForm'
-import Footer from '../component/footer'
+import Navbar from '../component/common/navbar'
+import Invoice from '../component/home/form'
+import SocialContact from '../component/common/socialConnect'
+import ContactForm from '../component/common/contactForm'
+import Footer from '../component/common/footer'
 
 type Props = {}
 
